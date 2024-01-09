@@ -1,27 +1,95 @@
-import React from 'react'
+'use client'
 
-const CInputText = ({title = '', placeHolder = '', textHelp = '', state = InputTextState.Default}: IInputText) => {
-    return (
-        <div className="w-full px-3 mb-6 md:mb-0">
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          {title}
-        </label>
-        <input className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder={placeHolder}/>
-        <p className="text-red-500 text-xs italic py-2">{textHelp}</p>
-      </div>
+import { 
+  IconDefinition, 
+  faEye, 
+  faEyeSlash, 
+  faUser,
+  faKey } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useState } from 'react'
+import { Button, FloatingLabel, Form, FormLabel, FormText, InputGroup } from 'react-bootstrap'
+import InputGroupText from 'react-bootstrap/esm/InputGroupText'
+
+const CInputText = ({title = '', placeholder = '', textHelp = '', state = InputTextState.Default, type = 'password', textValue = '', leftIcon = undefined}: IInputText) => {
+
+    const [showPassword, setShowPassword] = useState<boolean>(false)
+    const [typeInput, setTypeInput] = useState<string>(type)
+
+    const handelShowPassword = () => {
+      setShowPassword(!showPassword)
+      const validate = (type === 'password' && !showPassword)
+      const newTypeText = (validate) ? 'text' : 'password'
+      setTypeInput(newTypeText)
+    }
+
+    const getEyeIconPassword = (): IconDefinition => {
+      return !showPassword ? faEyeSlash : faEye
+    }
+
+    const getLeftIcon = (): IconDefinition => {
+      switch (leftIcon) {
+        case 'key': return faKey
+        case 'user': return faUser
+        default: return faUser
+      }
+    }
+
+    const RightInputButton = () => {
+      if(type == 'password') {
+        return (
+          <Button 
+            variant="outline-secondary" 
+            id="button-addon2" onClick={handelShowPassword}>
+            
+            <FontAwesomeIcon 
+              icon={getEyeIconPassword()} className='h-6 w-6'/>
+          </Button>
+        )
+      }
+      return <></>
+    }
+
+    const LeftIcon = () => {
+      if (leftIcon == undefined) {
+        return <></>
+      }
+      return (
+        <InputGroupText>
+          <FontAwesomeIcon icon={getLeftIcon()} className='h-6 w-6'/>
+        </InputGroupText>
       )
+    }
+
+    return (
+        <div className='m-3'>
+          <FormLabel className='text-lg font-semibold font-sans'>{title}</FormLabel>
+          <InputGroup>
+              <LeftIcon />
+              <Form.Control 
+                type={typeInput} 
+                placeholder={placeholder} 
+                style={{fontSize: 18, fontFamily: 'sans-serif'}}/>
+              <RightInputButton />
+          </InputGroup>
+          <FormText className='text-lg font-sans'>{textHelp}</FormText>
+        </div>
+    )
 }
 
 export default CInputText
 
 interface IInputText {
     title?: string
-    placeHolder?: string
+    placeholder?: string
     textHelp?: string
     state?: InputTextState
+    type?: 'password' | 'text'
+    textValue?: string
+    leftIcon? : 'user' | 'key' | undefined
   }
   
-  enum InputTextState {
+  export enum InputTextState {
     Default,
     Success,
     Alert,
