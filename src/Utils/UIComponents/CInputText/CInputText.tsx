@@ -68,7 +68,7 @@ const CInputText = ({title = '', placeholder = '', textHelp = '', state = InputT
     }
 
     return (
-        <div className='m-3'>
+        <div className='mr-3 mb-2 ml-3'>
           <FormLabel className='text-lg font-semibold font-sans'>{title}</FormLabel>
           <InputGroup>
               <LeftIcon />
