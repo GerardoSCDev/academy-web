@@ -8,7 +8,13 @@ import {
   faKey } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
-import { Button, FloatingLabel, Form, FormLabel, FormText, InputGroup } from 'react-bootstrap'
+import { 
+  Button, 
+  FloatingLabel, 
+  Form, 
+  FormLabel, 
+  FormText, 
+  InputGroup } from 'react-bootstrap'
 import InputGroupText from 'react-bootstrap/esm/InputGroupText'
 
 const CInputText = ({title = '', placeholder = '', textHelp = '', state = InputTextState.Default, type = 'password', textValue = '', leftIcon = undefined}: IInputText) => {
