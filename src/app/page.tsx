@@ -1,11 +1,61 @@
+'use client'
+
 import { CButton } from '@/Utils/UIComponents/CButton/CButton'
 import CInputText from '@/Utils/UIComponents/CInputText/CInputText'
-import { faArrowCircleDown, faDoorOpen, faEye, faSchool } from '@fortawesome/free-solid-svg-icons'
+import { faSchool } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Button, Card, CardBody, CardHeader, CardSubtitle, CardTitle, Spinner } from 'react-bootstrap'
+import { FormEvent, FormEventHandler, useEffect, useState } from 'react'
+import { Card, CardBody, CardHeader, CardSubtitle, CardTitle } from 'react-bootstrap'
 
 export default function Home() {
-    
+
+  const [textUser, setTextUser] = useState<string>('')
+  const [textHelperUser, setTextHelperUser] = useState<string>('')
+
+  const [textPassword, setTextPassword] = useState<string>('')
+  const [textHelperPassword, setTextHelperPassword] = useState<string>('')
+
+  const [disableButton, setDisableButton] = useState<boolean>(true)
+  
+  useEffect(() => {
+    validateForm()
+  }, [textUser, textPassword])
+  
+
+  const handelOnchangeInputUser = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTextUser(e.target.value)
+  }
+
+  const handelOnchangeInputPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTextPassword(e.target.value)
+  }
+
+  const cleanHelpersForm = () => {
+    setTextHelperUser('')
+    setTextHelperPassword('')
+  }
+
+  const validateForm = () => {
+    setDisableButton(true)
+    cleanHelpersForm()
+    if (textUser != '' && textPassword != '') {
+      setDisableButton(false)
+      return
+    }
+
+    if (textUser === '') {
+      setTextHelperUser('Ingresa tu usuario')
+    }
+
+    if (textPassword === '') {
+      setTextHelperPassword('Ingresa tu contraseña')
+    }
+  }
+
+  const handelSubmit = (e: FormEvent) => {
+    e.preventDefault()
+  }
+  
   return (
     
     <div className='absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-slate-900'>
@@ -24,21 +74,28 @@ export default function Home() {
           </CardSubtitle>
         </CardHeader>
         <CardBody>
-          <CInputText 
-            title='Usuario' 
-            placeholder='12345678' 
-            textHelp='Ingresa usaurio' 
-            type='text'
-            textValue='12345fsadf'
-            leftIcon='user'/>
-          <CInputText 
-            title='Password' 
-            placeholder='12345678' 
-            textHelp='Ingresa contraseña' 
-            type='password'
-            textValue='12345fsadf'
-            leftIcon='key' />
-          <CButton title='Continuar' icon='doorOpen' showLoader={false} disabled={false}/>
+          <form onSubmit={handelSubmit}>
+            <CInputText 
+              title='Usuario'
+              textHelp={textHelperUser} 
+              type='text'
+              textValue={textUser}
+              leftIcon='user'
+              onChange={handelOnchangeInputUser}/>
+            <CInputText 
+              title='Password'
+              textHelp={textHelperPassword}
+              type='password'
+              textValue={textPassword}
+              leftIcon='key'
+              onChange={handelOnchangeInputPassword} />
+            <CButton 
+              title='Continuar' 
+              icon='doorOpen' 
+              showLoader={false} 
+              disabled={disableButton}
+              type='submit'/>
+          </form>
         </CardBody>
       </Card>
     </div>

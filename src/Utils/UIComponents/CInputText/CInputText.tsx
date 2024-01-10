@@ -17,7 +17,7 @@ import {
   InputGroup } from 'react-bootstrap'
 import InputGroupText from 'react-bootstrap/esm/InputGroupText'
 
-const CInputText = ({title = '', placeholder = '', textHelp = '', state = InputTextState.Default, type = 'password', textValue = '', leftIcon = undefined}: IInputText) => {
+const CInputText = ({title = '', placeholder = '', textHelp = '', state = InputTextState.Default, type = 'password', textValue = '', leftIcon = undefined, onChange = undefined}: IInputText) => {
 
     const [showPassword, setShowPassword] = useState<boolean>(false)
     const [typeInput, setTypeInput] = useState<string>(type)
@@ -68,14 +68,16 @@ const CInputText = ({title = '', placeholder = '', textHelp = '', state = InputT
     }
 
     return (
-        <div className='mr-3 mb-2 ml-3'>
+        <div className='mr-3 mb-3 ml-3'>
           <FormLabel className='text-lg font-semibold font-sans'>{title}</FormLabel>
           <InputGroup>
               <LeftIcon />
               <Form.Control 
                 type={typeInput} 
                 placeholder={placeholder} 
-                style={{fontSize: 18, fontFamily: 'sans-serif'}}/>
+                style={{fontSize: 18, fontFamily: 'sans-serif'}}
+                value={textValue} 
+                onChange={onChange}/>
               <RightInputButton />
           </InputGroup>
           <FormText className='text-lg font-sans'>{textHelp}</FormText>
@@ -92,7 +94,8 @@ interface IInputText {
     state?: InputTextState
     type?: 'password' | 'text'
     textValue?: string
-    leftIcon? : 'user' | 'key' | undefined
+    leftIcon?: 'user' | 'key' | undefined
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   }
   
   export enum InputTextState {
