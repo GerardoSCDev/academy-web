@@ -4,7 +4,7 @@ import { IconDefinition, faDoorOpen} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, PlaceholderButton, Spinner } from 'react-bootstrap'
 
-export const CButton = ({title = '', icon = undefined, showLoader = false, disabled = false, onClick = undefined}: ICButton) => {
+export const CButton = ({title = '', icon = undefined, showLoader = false, disabled = false, onClick = undefined, type = 'button'}: ICButton) => {
   
     const getIcon = (): IconDefinition => {
         switch (icon) {
@@ -35,12 +35,13 @@ export const CButton = ({title = '', icon = undefined, showLoader = false, disab
     }
 
     return (
-    <div className='m-3'>
+    <div className='m-2.5'>
         <Button 
           variant="" 
           className='w-full shadow-md bg-gradient-to-t from-gray-900 to-gray-600 bg-gradient-to-rbg-[conic-gradient(at_bottom_left,_var(--tw-gradient-stops))] from-gray-700 via-gray-900 to-black text-white' 
           size="lg"
           disabled={disabled}
+          type={type}
           onClick={onClick}>
             <LoadSpinner />
               {title}
@@ -55,5 +56,6 @@ export interface ICButton {
     icon?: 'doorOpen' | undefined
     showLoader?: boolean
     disabled?: boolean  
+    type?: 'button' | 'submit'
     onClick?: () => void
 }
