@@ -10,13 +10,16 @@ import { CButton } from '@/Utils/UIComponents/CButton/CButton'
 import CInputText from '@/Utils/UIComponents/CInputText/CInputText'
 import LoginStrings from './config/strings'
 import LoginStyles from './config/styles'
+import { useRouter } from 'next/navigation'
 
 
 const { headerTitleString, headerSubTitleString, textInputUserTitleString, textInputUserEmptyHelperString, textInputPasswordTitleString, textInputPasswordEmptyHelperString, continueButtonTitleString } = LoginStrings
 
 const { cardTitleStyle } = LoginStyles
 
-export default function Home() {
+export default function Login() {
+
+  const router = useRouter()
 
   const [textUser, setTextUser] = useState<string>('')
   const [textHelperUser, setTextHelperUser] = useState<string>('')
@@ -63,6 +66,7 @@ export default function Home() {
 
   const handelSubmit = (e: FormEvent) => {
     e.preventDefault()
+    router.push('/home')
   }
 
   const CardHeaderLogin = () => {
@@ -83,7 +87,6 @@ export default function Home() {
     )
   }
 
-  
   return (
     
     <div className='h-full flex justify-center items-center bg-slate-900'>
