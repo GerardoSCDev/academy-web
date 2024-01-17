@@ -2,7 +2,7 @@
 import React from 'react'
 import { IconDefinition, faDoorOpen} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Button, PlaceholderButton, Spinner } from 'react-bootstrap'
+import { Button, Spinner } from 'react-bootstrap'
 
 export const CButton = ({title = '', icon = undefined, showLoader = false, disabled = false, onClick = undefined, type = 'button'}: ICButton) => {
   
